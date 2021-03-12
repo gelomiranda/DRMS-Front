@@ -19,7 +19,8 @@ Vue.prototype.$log = console.log.bind(console)
 //Constant base url for axios
 //const baseURL = 'http://192.168.68.115:8080';
 
-const baseURL = 'http://localhost:8080/api/';
+//const baseURL = 'http://localhost:8080/api/';
+const baseURL = 'http://3.131.169.233:8080/api/';
 
 if (typeof baseURL !== 'undefined') {
   Axios.defaults.baseURL = baseURL;
