@@ -1,0 +1,7 @@
+const SHOW_ALL_BLOG = 'SHOW_ALL_BLOG'
+const SHOW_BLOG_BY_ID = 'SHOW_BLOG_BY_ID'
+
+export default{
+    SHOW_ALL_BLOG,
+    SHOW_BLOG_BY_ID
+}
