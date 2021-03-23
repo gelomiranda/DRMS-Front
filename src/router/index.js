@@ -64,6 +64,7 @@ const PatientList = () => import('@/views/patients/List')
 
 // Nephrologist
 const NephrologistCreate = () => import('@/views/nephrologist/Create')
+const NephrologistUpdate = () => import('@/views/nephrologist/Update')
 const NephrologistList = () => import('@/views/nephrologist/List')
 
 
@@ -206,6 +207,11 @@ function configRoutes () {
               path: 'create',
               name: 'create',
               component: NephrologistCreate
+            },
+            {
+              path: 'update/:id',
+              name: 'NephrologistUpdate',
+              component: NephrologistUpdate
             }
           ]
         },

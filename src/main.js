@@ -20,7 +20,7 @@ Vue.prototype.$log = console.log.bind(console)
 //const baseURL = 'http://192.168.68.115:8080';
 
 //const baseURL = 'http://localhost:8080/api/';
-const baseURL = 'http://3.131.169.233:8080/api/';
+const baseURL = 'http://localhost:8080/api/';
 
 if (typeof baseURL !== 'undefined') {
   Axios.defaults.baseURL = baseURL;
@@ -29,11 +29,16 @@ Vue.prototype.$http = Axios;
 
 new Vue({
   el: '#app',
-  router,
   store,
+  router,
   icons,
   template: '<App/>',
   components: {
     App
+  },watch: {
+    $route(to, from) {
+      // react to route changes...
+      this.$store.state.alertVisibility = false;
+    }
   }
 })

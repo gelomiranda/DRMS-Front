@@ -10,7 +10,7 @@
                         <CRow>
                             <CCol sm="12">
                                 <CDataTable
-                                    :items="this.$store.state.items.includedInthePackage"
+                                    :items="this.$store.state.items.patientItems"
                                     :fields="fields"
                                     striped
                                     caption="List of items"
@@ -27,7 +27,7 @@
                                                     v-model="item.billing_quanity" 
                                                      class="centered-input form-control-sm" 
                                                     :disabled="item.item_type == 'Not Moving' || item.item_type == 'Discount'"
-                                                    />
+                                                    @change="test(item.description)"/>
                                             <!--<CInput v-model="item.billing_quanity" value="1" v-on:change="test()"  class="centered-input form-control-sm" v-if="item.item_type != 'Not Moving' || item.item_type != 'Discount'"/>-->
                                         </td>
                                     </template>
@@ -50,10 +50,10 @@
                                 <div class="text-right">
                                     <br>
                                     <hr>
-                                    <p class="text-success">Total : {{ getTotal }}</p>
-                                    <p class="text-success">Discount : {{ getDiscount }}</p>
-                                    <hr>
-                                    <p class="text-success"> Grand Total: {{ getTotal -  getDiscount }}</p>
+                                    <p class="text-success">Total : {{ total }}</p>
+                                    <p class="text-success">Discount : {{ discount }}</p>
+                                    <!--<hr>
+                                    <p class="text-success"> Grand Total: {{ getTotal -  getDiscount }}</p>-->
                                 </div>
                             </CCol> 
                         </CRow>
@@ -67,7 +67,7 @@
             :show.sync="warningModal"
             >
             <select v-model="selected" class="form-control">
-                <option v-for="item in items" 
+                <option v-for="item in allItems" 
                         :value="{ id: item.id, 
                                 description: item.description,
                                 price:item.price 
@@ -85,12 +85,11 @@
 </template>
 
 <script>
+import { mapGetters, mapState} from 'vuex'
 export default {
     name:'TreatmentItems',
     data() {
         return {
-            items:[],
-            itemIncludedInPackage :[],
             warningModal: false,
             fields:[
                     'Description',
@@ -106,54 +105,34 @@ export default {
         usePhilHealth: false
     },
     created () {
-        this.$http.get('items')
-        .then((response) => {
-            this.items = response.data;
-            this.$store.state.items.includedInthePackage = this.items.filter(itemIncludedInPackage => itemIncludedInPackage.include_in_package == 'Yes');
-        });
+        this.$store.dispatch('getAll');
     },
-
-    computed:{
-         getTotal(){
-          var total = 0;
-          this.$store.state.items.includedInthePackage.forEach(function(item,index){
-              if(item.item_type != 'Discount'){
-                total += item.price * item.billing_quanity;
-              }
-          });
-          this.total = total;
-          return this.total;
-        },
-        getDiscount(){
-            var itemCoveredByPhilHealth = 0;
-            var totalDiscount = 0;
-            var discount = 0;
-            var discounted = false;
-            this.$store.state.items.includedInthePackage.forEach(function(item,index){
-                if(item.covered_by_philhealth == 1){
-                    itemCoveredByPhilHealth += item.price;
-                }
-                if(item.item_type == 'Discount'){
-                    discount += item.price;
-                    discounted = true;
-                }
-            });
-            //this.totalDiscount = itemCoveredByPhilHealth;
-            return (discounted) ? itemCoveredByPhilHealth : 0;
-        }
-    },
+    computed:mapGetters({
+        'items': 'allpatientItems',
+        'allItems': 'allItems',
+        'total' : 'total',
+        'discount' : 'discount'
+    }),
     methods: {
+        test(id){
+            this.$store.commit({
+                'type' : 'UPDATE_ITEM',
+                'data' : id 
+            })
+        },
         showModal(){
           this.warningModal = true;
         },
-       
         remove(description){
-            this.$store.state.items.includedInthePackage = this.$store.state.items.includedInthePackage.filter(itemIncludedInPackage => itemIncludedInPackage.description != description);
+            this.$store.commit({
+                'type' : 'DELETE_ITEM',
+                'description' : description 
+            })
         },
         addItem(){
-            const found = this.$store.state.items.includedInthePackage.some(el => el.description === this.selected.description);
+            const found = this.$store.state.items.patientItems.some(el => el.description === this.selected.description);
             if(!found){
-                this.$store.state.items.includedInthePackage.push({
+                this.$store.state.items.patientItems.push({
                     description:this.selected.description,
                     price:this.selected.price,
                     billing_quanity:1,

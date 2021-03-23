@@ -152,6 +152,7 @@ export default {
       },
       philhealthChange($event){
         if($event.target.checked){
+            alert(1);
             this.$store.state.items.includedInthePackage.push({description:'Philhealth Discount',item_type:'Discount',price:2650,billing_quanity:1,item_type:'Discount'});
         }else{
             this.$store.state.items.includedInthePackage = this.$store.state.items.includedInthePackage.filter(itemIncludedInPackage => itemIncludedInPackage.description != 'Philhealth Discount');
@@ -174,7 +175,8 @@ export default {
                 }).then((response) => {
                     var billingHeaderId = response.data.billingHeaderId;
                     var bulkData = [];
-                    this.$store.state.items.includedInthePackage.forEach((item,index) => {
+                    this.$store.state.items.patientItems.forEach((item,index) => {
+                        
                         bulkData.push({
                             "billingHeaderId" : billingHeaderId,
                             "description" : item.description,
@@ -182,11 +184,23 @@ export default {
                             "price" : item.price,
                             "total" : (item.price * item.quantity)
                         })
+                        //Insert Item History if item is moving
+                        if(item.item_type == 'Moving'){
+                            this.$http.post('itemhistories',{
+                                itemId : item.id,
+                                previous_quantity : 1,
+                                activity:'Less ' 
+                            }).catch((error) => {
+                                this.$store.commit('errorState',error.response);
+                            })
+                        }
+
+
                     });
+                    console.log(bulkData);
 
                     this.$http.post('billingdetails',bulkData).then((response) => {
                         this.$store.commit('successState','Record successfully created.')
-                        this.$store.state.items.includedInthePackage = this.$store.state.items.includedInthePackage.filter(itemIncludedInPackage => itemIncludedInPackage.include_in_package == 'Yes');
                     }).catch((error) => {
                         this.$store.commit('errorState',error.response);
                     })

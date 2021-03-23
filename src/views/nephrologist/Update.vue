@@ -27,26 +27,31 @@
 
 <script>
 import Alert from '../utils/Alert.vue';
+import api from '../../api/index'
 export default {
   components: { Alert },
   name: 'Forms',
   data () {
     return {
-      form:{
-          first_name: '',
-          middle_name:'',
-          last_name:''
-      }
+      form:{}
     }
   },
   mounted(){
   this.$store.state.alertVisibility = false;
   },
+  created(){
+    api.get('nephrologists/' + this.$route.params.id)
+    .then((response) => {
+        this.form = response.data;
+    }).catch((error) => {
+      this.$store.commit('errorState', error.response);
+    });
+ },
   methods: {
     save () {
-      this.$http.post('nephrologists', this.form)
+      this.$http.put('nephrologists/' + this.$route.params.id)
         .then((response) => {
-          this.$store.commit('successState','Record successfully created.')
+          this.$store.commit('successState','Record successfully updated.')
         }).catch((error)=> {
           this.$store.commit('errorState',error.response);
         });    

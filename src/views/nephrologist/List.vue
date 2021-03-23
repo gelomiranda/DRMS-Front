@@ -1,38 +1,33 @@
 <template>
-  <div>
-    <CRow>
-      <CCol lg="12">
-        <CTableWrapper
-          :items="items"
-          :fields="tableHeader"
-          striped
-          caption="Striped Table"
-        />
-      </CCol>
-    </CRow>
-  </div>
+  <listing
+   :fields="fields"
+   :items="items"
+   :url="url"
+  updateRoute="NephrologistUpdate"
+  ></listing>
 </template>
-
 <script>
-import CTableWrapper from '../base/Table.vue'
+import Listing from '../utils/Listing'
 
 export default {
-  name: 'Tables',
-  components: { CTableWrapper },
+  name: 'NephrologistList',
   data (){
     return {
-      tableHeader :['id',
+      fields :['id',
                     {key:'first_name',label:'First name'},
                     {key:'middle_name',label:'Middle name'},
-                    {key:'last_name',label:'Last name'}],
-      items:[]
+                    {key:'last_name',label:'Last name'}
+                    ,'Action'],
+      items:[],
+      
+      url:'nephrologists' 
     }
   },
+  components: { Listing },
   mounted () {
-       this.$http.get('api/nephrologists')
+       this.$http.get(this.url)
         .then((response) => {
           this.items = response.data;
-          console.log(response.data);
         }).catch(function (error) {
           if (error.response) {
             // The request was made and the server responded with a status code

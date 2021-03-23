@@ -3,14 +3,14 @@
     :fields="fields"
     :items="items"
     :url="url"
-    updateRoute="PatientUpdate"
+    updateRoute="ItemUpdate"
   />
 </template>
 
 <script>
 import api from '../../api'
 import Listing from '../utils/Listing'
-
+import {}
 export default {
   name: 'Tables',
   components: { Listing },
@@ -26,10 +26,11 @@ export default {
           {key:'item_type',label:'Item Type'},
           {key:'include_in_package',label:'Included in the package'},
           {key:'covered_by_philhealth',label:'Covered by Philhealth'},
-          'Action'
+          {key:'History', _style: 'width:1%', sorter: false, filter: false},
+          {key:'Action',_style: 'width:1%',sorter: false,filter: false }
         ],
-      items:[],
-      url:'items'
+        items:[],
+        url:'items'
     }
   },
   created () {

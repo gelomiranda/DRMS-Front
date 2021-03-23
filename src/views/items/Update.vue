@@ -51,18 +51,17 @@ export default {
   name: 'Forms',
   data () {
     return {
-      alertVisibility:false,
-      alertType:'',
-      alertMsg:'',
-      form:{
-          description: '',
-          unit:'',
-          quantity:'',
-          price:'',
-          item_type:''
-      }
+      form:{}
     }
   },
+  created(){
+    this.$http.get('items/' + this.$route.params.id)
+    .then((response) => {
+        this.form = response.data;
+    }).catch((error) => {
+      this.$store.commit('errorState', error.response);
+    });
+ },
   methods: {
     save () {
         this.$http.put('items/' + this.$route.params.id, this.form)
