@@ -10,7 +10,6 @@
 <script>
 import api from '../../api'
 import Listing from '../utils/Listing'
-import {}
 export default {
   name: 'Tables',
   components: { Listing },
