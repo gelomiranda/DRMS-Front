@@ -159,8 +159,7 @@ export default {
         }
       },
       save(){
-
-          if( this.patientData.id != null ){
+        if( this.patientData.id != null ){
             this.$http.post('treatments', {
                 patientId: this.patientData.id,
                 machine : this.machine,
@@ -189,7 +188,7 @@ export default {
                             this.$http.post('itemhistories',{
                                 itemId : item.id,
                                 previous_quantity : 1,
-                                activity:'Less ' 
+                                activity:'Less: Used ' + item.quantity + ' in Treatment No. ' + treatmentId,  
                             }).catch((error) => {
                                 this.$store.commit('errorState',error.response);
                             })
@@ -197,7 +196,6 @@ export default {
 
 
                     });
-                    console.log(bulkData);
 
                     this.$http.post('billingdetails',bulkData).then((response) => {
                         this.$store.commit('successState','Record successfully created.')
