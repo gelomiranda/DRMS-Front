@@ -72,6 +72,7 @@ const NephrologistList = () => import('@/views/nephrologist/List')
 const ItemCreate = () => import('@/views/items/Create')
 const ItemList = () => import('@/views/items/List')
 const ItemUpdate = () => import('@/views/items/Update')
+const ItemHistory = () => import('@/views/items/History')
 
 
 // Treatments
@@ -184,6 +185,11 @@ function configRoutes () {
               path: 'update/:id',
               name: 'ItemUpdate',
               component: ItemUpdate
+            },
+            {
+              path: 'history/:id',
+              name: 'ItemHistory',
+              component: ItemHistory
             }
           ]
         },

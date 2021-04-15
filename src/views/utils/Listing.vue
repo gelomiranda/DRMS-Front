@@ -21,7 +21,7 @@
             clickableRows>
               <template #History="{item}">
                 <td style="width:  7%">
-                    <CLink :to="{ name: updateRoute, params: { id: item.id }}">
+                    <CLink :to="{ name: 'ItemHistory', params: { id: item.id }}">
                       <CIcon name="cilHistory" class="mx-2"/>
                     </CLink>
                 </td>
