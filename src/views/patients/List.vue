@@ -26,7 +26,7 @@ export default {
   created (){
     this.$http.get(this.url)
     .then((response) => {
-        this.items = response.data
+      this.items = response.data
     }).catch(function (error) {
       this.$store.commit('errorState',error.response);
     });

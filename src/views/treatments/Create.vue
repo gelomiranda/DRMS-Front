@@ -185,7 +185,7 @@ export default {
                         })
                         //Insert Item History if item is moving
                         if(item.item_type == 'Moving'){
-                            this.$http.post('itemhistories',{
+                            this.$http.post('item/history',{
                                 itemId : item.id,
                                 previous_quantity : 1,
                                 activity:'Less: Used ' + item.quantity + ' in Treatment No. ' + treatmentId,  

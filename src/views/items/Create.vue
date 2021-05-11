@@ -47,6 +47,8 @@
 </template>
 
 <script>
+
+
 export default {
   name: 'Forms',
   data () {
@@ -68,7 +70,7 @@ export default {
     save () {
         this.$http.post('items', this.form)
         .then((response) => {
-          this.$store.commit('successState','Record successfully created.')
+          this.$store.commit('successState','Record successfully created.');
         }).catch((error)=> {
           if (error.response) {
           } else if (error.request) {

@@ -8,7 +8,8 @@
 </template>
 
 <script>
-import api from '../../api'
+//import api from '../../api'
+import { mapGetters, mapActions } from 'vuex'
 import Listing from '../utils/Listing'
 export default {
   name: 'Tables',
@@ -28,17 +29,14 @@ export default {
           {key:'History', _style: 'width:1%', sorter: false, filter: false},
           {key:'Action',_style: 'width:1%',sorter: false,filter: false }
         ],
-        items:[],
         url:'items'
     }
   },
+  computed: mapGetters({
+    items: 'allItems'
+  }),
   created () {
-    api.get(this.url)
-    .then((response) => {
-      this.items = response.data;
-    }).catch(function (error) {
-      this.$store.commit('errorState', error.response);
-    });
+    this.$store.dispatch('getAll')
   },
   methods: {
     updateItems(id) {

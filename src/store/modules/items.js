@@ -50,6 +50,9 @@ const actions = {
       commit('GET_ALL',response.data) ;
       commit('GET_ALL_INCLUDED_IN_THE_PACKAGE');
     }); 
+  },
+  getItemsById: (state) => (id) => {
+    return state.all.find(a => a.id == id);
   }
 }
 
