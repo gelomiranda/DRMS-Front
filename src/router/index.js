@@ -80,6 +80,13 @@ const TreatmentCreate = () => import('@/views/treatments/Create')
 const TreatmentList = () => import('@/views/treatments/List')
 const TreatmentUpdate = () => import('@/views/treatments/Update')
 
+// Vendors
+
+const VendorList = () => import('@/views/vendors/List')
+const VendorCreate = () => import('@/views/vendors/Create')
+const VendorUpdate= () => import('@/views/vendors/Update')
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -190,6 +197,34 @@ function configRoutes () {
               path: 'history/:id',
               name: 'ItemHistory',
               component: ItemHistory
+            }
+          ]
+        },
+        {
+          path: 'vendors',
+          meta: {
+            label: 'Vendors'
+          },
+          component: {
+            render(c) {
+              return c('router-view')
+            }
+          },
+          children: [
+            {
+              path: 'list',
+              name: 'VendorList',
+              component: VendorList
+            },
+            {
+              path: 'create',
+              name: 'VendorCreate',
+              component: VendorCreate
+            },
+            {
+              path: 'update/:id',
+              name: 'VendorUpdate',
+              component: VendorUpdate
             }
           ]
         },

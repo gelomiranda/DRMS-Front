@@ -11,7 +11,7 @@ export default [
         _name: 'CSidebarNavDropdown',
         name: 'Patients',
         route: '/patients',
-        icon: 'cil-cursor',
+        icon: 'cil-wc',
         items: [
           {
             name: 'List',
@@ -41,9 +41,25 @@ export default [
       },
       {
         _name: 'CSidebarNavDropdown',
+        name: 'Vendors',
+        route: '/vendors',
+        icon: 'cil-address-book',
+        items: [
+          {
+            name: 'List',
+            to: '/vendors/list'
+          },
+          {
+            name: 'Create',
+            to: '/vendors/create'
+          }
+        ]
+      },
+      {
+        _name: 'CSidebarNavDropdown',
         name: 'Nephrologist',
         route: '/nephrologists',
-        icon: 'cil-cursor',
+        icon: 'cil-pen-alt',
         items: [
           {
             name: 'List',
@@ -59,7 +75,7 @@ export default [
         _name: 'CSidebarNavDropdown',
         name: 'Treatments',
         route: '/treatments',
-        icon: 'cil-cursor',
+        icon: 'cil-wheelchair',
         items: [
           {
             name: 'List',
